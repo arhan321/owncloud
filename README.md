@@ -6,4 +6,8 @@ misalkan Ketika setelah selesai up pas panggil service owncloud nya error maka b
 
 jika owncloud di hosting (di tambahkan domain) wajib hukum nya untuk ganti jalur yang tadi2nya localhost jadi nama domain, dan setelah di config berilah chmod 777, setelah itu restart container owncloud nya.
 
+jika masih error pada compose.yml tambahkan di bagian environment : 
+
+OWNCLOUD_TRUSTED_DOMAINS: "hans.djncloud.my.id, 192.168.0.5, localhost"
+
 ================ END install owncloud =======================
