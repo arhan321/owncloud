@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  mysql_owncloud:
+    image: mariadb:10.2
+    container_name: mysql_owncloud
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "33345:3306"
+    volumes:
+      - ./database/data:/var/lib/mysql
+      - ./conf.d:/etc/mysql/conf.d:ro
+    environment:
+      MYSQL_USER: jhonss
+      MYSQL_PASSWORD: Djony
+      MYSQL_ROOT_PASSWORD: Djony
+      MYSQL_DATABASE: owncloud
+
+  owncloud:
+    image: owncloud/server:latest
+    container_name: owncloud
+    restart: unless-stopped
+    ports:
+      - 8070:8080
+    depends_on:
+      - mysql_owncloud
+    environment:
+      OWNCLOUD_DB_TYPE: mysql
+      OWNCLOUD_DB_NAME: owncloud
+      OWNCLOUD_DB_USERNAME: jhonss
+      OWNCLOUD_DB_PASSWORD: Djony
+      OWNCLOUD_DB_HOST: mysql_owncloud
+      OWNCLOUD_ADMIN_USERNAME: admin
+      OWNCLOUD_ADMIN_PASSWORD: admin_password
+    volumes:
+      - owncloud_files:/mnt/data
+
+volumes:
+  database:
+  owncloud_files:
